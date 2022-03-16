@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <form (ngSubmit)="onPost()" #f="ngForm">
+      <div class="form-group">
+        <fieldset class="form-group border p-3">
+          <legend>Enter here</legend>
+        <label for="id">Id:</label>
+        <input type="text" name="id" id="id" placeholder="Id" class="form-control" [(ngModel)]="idid" required>
+        <br/>
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" placeholder="Description" class="form-control" [(ngModel)]="desc" required>
+        </fieldset>
+      </div>
+      <br/>
+      <button class="btn btn-success" type="submit" [disabled]="f.invalid">{{ editMode ? "Update" : "Post" }}</button>
+      <button class="btn btn-primary" (click)="onFetch()" type="button">Fetch</button>
+    </form>
+  </div>
+  <hr>
+  <div class="container-fluid">
+    <h2 class="text-danger" *ngIf="loadedData.length < 1 && !isFetching">Nothing to fetch here...</h2>
+    <ul class="list-group" *ngIf="loadedData.length >= 1 && !isFetching">
+      <li class="list-group-item" *ngFor="let data of loadedData; let i = index">
+        <h4>{{ data.id }}</h4>
+        <p>{{ data.description }}</p>
+        <button class="btn btn-danger" (click)="onDelete(i)" type="button">Delete</button>
+        <button class="btn btn-warning" (click)="onEdit(i)" type="button">Edit</button>
+      </li>
+    </ul>
+  </div>
+  <div class="container-fluid" style="display: flex;">
+    <div style="margin: auto; height: 100px; width: 100px; border-style: dotted; border-width: 20px;" class="spinner-border text-primary" role="status" *ngIf="isFetching"></div> 
+  </div>
+</body>
+</html>
